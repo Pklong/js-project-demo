@@ -1,0 +1,59 @@
+<!DOCTYPE>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <style>
+     canvas {
+       border: 10px solid red;
+     }
+    </style>
+    <script>
+     document.addEventListener("DOMContentLoaded", () => {
+       const canvas = document.querySelector('canvas')
+       const ctx = canvas.getContext('2d')
+
+       const game = {
+	 startX: 10,
+	 startY: 10,
+	 ctx,
+	 draw: function() {
+	   this.ctx.clearRect(0, 0, 400, 400)
+	   this.ctx.fillRect(this.startX, this.startY, 100, 100)
+	 }
+       }
+       function step() {
+	 game.draw()
+	 requestAnimationFrame(step)
+       }
+
+       document.addEventListener("keydown", (e) => {
+	 switch (e.keyCode) {
+	   case 38:
+	     game.startY -= 10
+	     if (game.startY < 0) console.log('off the top')
+	     break
+	   case 37:
+	     game.startX -= 10
+	     if (game.startX < 0) console.log('off the left')
+	     break
+	   case 40:
+	     game.startY += 10
+	     if (game.startY + 100 > game.ctx.canvas.clientHeight) console.log('off the bottom')
+	     break
+	   case 39:
+	     game.startX += 10
+	     if (game.startX + 100 > game.ctx.canvas.clientWidth) console.log('off the right')
+	     break
+	   default:
+	     console.log('this is not the key you are looking for')
+	 }
+       })
+
+       step()
+     })
+    </script>
+    <canvas height="400" width="400"></canvas>
+  </body>
+</html>
